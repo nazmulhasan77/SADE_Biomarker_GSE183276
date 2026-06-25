@@ -1,0 +1,9 @@
+cell_type,total_cells,condition_count__AKI,condition_count__CKD,condition_count__Ref,status,selected_cells_per_condition,balanced_total_cells,balance_reason
+PT,25373,8304,11886,5183,valid,5183,15549,Ref count used
+TAL,23894,8930,11319,3645,valid,3645,10935,Ref count used
+IMM,17176,8819,6884,1473,valid,1473,4419,Ref count used
+EC,8550,1915,3905,2730,valid,1915,5745,minimum condition count used
+IC,8334,1110,5023,2201,valid,1110,3330,minimum condition count used
+PC,7483,2025,4632,826,valid,826,2478,Ref count used
+CNT,6459,1583,2705,2171,valid,1583,4749,minimum condition count used
+DCT,5324,824,2694,1806,valid,824,2472,minimum condition count used

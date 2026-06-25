@@ -1,0 +1,10 @@
+split,condition,n_cells
+test,AKI,316
+test,CKD,317
+test,Ref,317
+train,AKI,1077
+train,CKD,1076
+train,Ref,1076
+validation,AKI,190
+validation,CKD,190
+validation,Ref,190

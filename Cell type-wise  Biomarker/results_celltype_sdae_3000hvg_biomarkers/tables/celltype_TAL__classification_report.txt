@@ -1,0 +1,9 @@
+              precision    recall  f1-score   support
+
+         AKI       0.89      0.87      0.88       729
+         CKD       0.83      0.90      0.86       729
+         Ref       0.99      0.93      0.96       729
+
+    accuracy                           0.90      2187
+   macro avg       0.90      0.90      0.90      2187
+weighted avg       0.90      0.90      0.90      2187
