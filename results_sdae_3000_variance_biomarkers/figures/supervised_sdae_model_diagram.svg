@@ -1,0 +1,187 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1120" viewBox="0 0 1800 1120" role="img" aria-labelledby="title desc">
+  <title id="title">Supervised Denoising Autoencoder architecture for GSE183276 biomarker discovery</title>
+  <desc id="desc">Diagram of the full SDAE workflow: single-cell RNA-seq data, balanced sampling, top 3000 HVG selection, masking noise, encoder, latent layer, decoder reconstruction, classifier branch, evaluation, and Gradient x Input biomarker ranking.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f7fbff"/>
+      <stop offset="0.56" stop-color="#eef7f3"/>
+      <stop offset="1" stop-color="#fff8ed"/>
+    </linearGradient>
+    <linearGradient id="inputGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#dff2ff"/>
+      <stop offset="1" stop-color="#b8e1ff"/>
+    </linearGradient>
+    <linearGradient id="noiseGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fff3c7"/>
+      <stop offset="1" stop-color="#ffd77a"/>
+    </linearGradient>
+    <linearGradient id="encGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#d8f7e2"/>
+      <stop offset="1" stop-color="#97e5b2"/>
+    </linearGradient>
+    <linearGradient id="latentGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e6dcff"/>
+      <stop offset="1" stop-color="#bda5ff"/>
+    </linearGradient>
+    <linearGradient id="decGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffe7d8"/>
+      <stop offset="1" stop-color="#ffba8d"/>
+    </linearGradient>
+    <linearGradient id="classGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffe1ec"/>
+      <stop offset="1" stop-color="#ff9fc0"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#16324f" flood-opacity="0.12"/>
+    </filter>
+    <marker id="arrow" markerWidth="16" markerHeight="16" refX="12" refY="8" orient="auto" markerUnits="strokeWidth">
+      <path d="M2,2 L14,8 L2,14 Z" fill="#26465f"/>
+    </marker>
+    <style>
+      .title { font: 700 44px Arial, Helvetica, sans-serif; fill: #15324a; }
+      .subtitle { font: 400 22px Arial, Helvetica, sans-serif; fill: #456276; }
+      .label { font: 700 24px Arial, Helvetica, sans-serif; fill: #18374f; }
+      .small { font: 400 18px Arial, Helvetica, sans-serif; fill: #35566f; }
+      .tiny { font: 400 15px Arial, Helvetica, sans-serif; fill: #4e6a7d; }
+      .metric { font: 700 20px Arial, Helvetica, sans-serif; fill: #15324a; }
+      .box { stroke: #aac1d0; stroke-width: 2; rx: 18; filter: url(#shadow); }
+      .mini { stroke: #8caabc; stroke-width: 1.5; rx: 12; }
+      .line { stroke: #26465f; stroke-width: 4; fill: none; marker-end: url(#arrow); }
+      .softline { stroke: #5d7f95; stroke-width: 3; fill: none; marker-end: url(#arrow); stroke-dasharray: 9 9; }
+      .note { fill: #ffffff; stroke: #d0dce4; stroke-width: 1.5; rx: 14; }
+      .chip { fill: #ffffff; stroke: #c7d6df; stroke-width: 1.5; rx: 18; }
+    </style>
+  </defs>
+
+  <rect width="1800" height="1120" fill="url(#bg)"/>
+  <circle cx="1540" cy="130" r="180" fill="#cfe8ff" opacity="0.35"/>
+  <circle cx="180" cy="970" r="210" fill="#ffe0bd" opacity="0.34"/>
+
+  <text x="90" y="82" class="title">Supervised Denoising Autoencoder (SDAE) for CKD / AKI / Normal Biomarker Discovery</text>
+  <text x="92" y="120" class="subtitle">GSE183276 single-cell RNA-seq | 3000 variance-selected HVGs | reconstruction + supervised classification + Gradient x Input attribution</text>
+
+  <!-- Data preparation row -->
+  <rect x="80" y="180" width="300" height="178" class="box" fill="url(#inputGrad)"/>
+  <text x="110" y="222" class="label">Raw scRNA-seq input</text>
+  <text x="110" y="260" class="small">Filtered data: 109,741 cells</text>
+  <text x="110" y="290" class="small">Genes: 37,080</text>
+  <text x="110" y="320" class="small">Condition: condition.l1</text>
+  <text x="110" y="348" class="tiny">Classes mapped to Normal, AKI, CKD</text>
+
+  <rect x="465" y="180" width="300" height="178" class="box" fill="#edf8ff"/>
+  <text x="500" y="222" class="label">Balanced sampling</text>
+  <text x="500" y="260" class="small">Max 4000 cells/class</text>
+  <text x="500" y="290" class="small">Model data: 12,000 cells</text>
+  <text x="500" y="320" class="small">Train / validation / test</text>
+  <text x="500" y="348" class="tiny">Stratified split preserves class balance</text>
+
+  <rect x="850" y="180" width="300" height="178" class="box" fill="#eefcf2"/>
+  <text x="885" y="222" class="label">Feature selection</text>
+  <text x="885" y="260" class="small">Top 3000 HVGs</text>
+  <text x="885" y="290" class="small">Selected by variance ranking</text>
+  <text x="885" y="320" class="small">Input vector: 3000 genes</text>
+  <text x="885" y="348" class="tiny">Reduces noise, memory, overfitting</text>
+
+  <rect x="1235" y="180" width="300" height="178" class="box" fill="url(#noiseGrad)"/>
+  <text x="1270" y="222" class="label">Denoising step</text>
+  <text x="1270" y="260" class="small">Random gene masking</text>
+  <text x="1270" y="290" class="small">Noise probability: 0.20</text>
+  <text x="1270" y="320" class="small">Noisy input during training</text>
+  <text x="1270" y="348" class="tiny">Model learns robust expression patterns</text>
+
+  <path d="M380 269 H452" class="line"/>
+  <path d="M765 269 H837" class="line"/>
+  <path d="M1150 269 H1222" class="line"/>
+
+  <!-- Architecture container -->
+  <rect x="80" y="430" width="1665" height="415" rx="24" fill="#ffffff" stroke="#c8d8e2" stroke-width="2.5" filter="url(#shadow)"/>
+  <text x="115" y="475" class="label">Neural network architecture</text>
+  <text x="115" y="508" class="small">Forward pass: noisy gene vector -> encoder -> 32-dimensional latent representation -> decoder and classifier heads</text>
+
+  <rect x="130" y="570" width="190" height="108" class="mini" fill="url(#inputGrad)"/>
+  <text x="168" y="612" class="label">Input</text>
+  <text x="157" y="646" class="small">3000 genes</text>
+
+  <rect x="410" y="550" width="205" height="148" class="mini" fill="url(#encGrad)"/>
+  <text x="455" y="592" class="label">Encoder</text>
+  <text x="450" y="626" class="small">Linear 3000 -> 512</text>
+  <text x="450" y="656" class="small">BN + ReLU + Dropout</text>
+  <text x="450" y="686" class="small">Linear 512 -> 128</text>
+
+  <rect x="705" y="550" width="205" height="148" class="mini" fill="url(#latentGrad)"/>
+  <text x="760" y="592" class="label">Latent</text>
+  <text x="755" y="626" class="small">128 -> 32</text>
+  <text x="738" y="656" class="small">Compressed disease</text>
+  <text x="752" y="686" class="small">representation</text>
+
+  <rect x="1015" y="480" width="235" height="140" class="mini" fill="url(#decGrad)"/>
+  <text x="1070" y="522" class="label">Decoder</text>
+  <text x="1060" y="556" class="small">32 -> 128 -> 512</text>
+  <text x="1060" y="586" class="small">512 -> 3000 genes</text>
+  <text x="1060" y="614" class="tiny">Reconstructs clean expression</text>
+
+  <rect x="1015" y="680" width="235" height="122" class="mini" fill="url(#classGrad)"/>
+  <text x="1064" y="722" class="label">Classifier</text>
+  <text x="1060" y="756" class="small">32 -> 64 -> 3 logits</text>
+  <text x="1060" y="786" class="small">AKI | CKD | Normal</text>
+
+  <rect x="1360" y="480" width="305" height="140" class="mini" fill="#fff6e8"/>
+  <text x="1395" y="522" class="label">Reconstruction loss</text>
+  <text x="1395" y="558" class="small">MSE(reconstructed, input)</text>
+  <text x="1395" y="592" class="small">Weight: 1.0</text>
+
+  <rect x="1360" y="680" width="305" height="122" class="mini" fill="#fff0f6"/>
+  <text x="1395" y="722" class="label">Classification loss</text>
+  <text x="1395" y="758" class="small">Weighted cross entropy</text>
+  <text x="1395" y="790" class="small">Weight: 1.5</text>
+
+  <path d="M320 624 H397" class="line"/>
+  <path d="M615 624 H692" class="line"/>
+  <path d="M910 624 C955 624 965 552 1002 552" class="line"/>
+  <path d="M910 624 C960 624 965 742 1002 742" class="line"/>
+  <path d="M1250 552 H1347" class="line"/>
+  <path d="M1250 742 H1347" class="line"/>
+
+  <rect x="640" y="755" width="285" height="54" class="note"/>
+  <text x="665" y="790" class="metric">Total loss = MSE + 1.5 x CE</text>
+
+  <!-- Outputs row -->
+  <rect x="80" y="900" width="365" height="138" class="box" fill="#f5fbff"/>
+  <text x="118" y="940" class="label">Model performance</text>
+  <text x="118" y="976" class="small">Test accuracy: 0.8988</text>
+  <text x="118" y="1006" class="small">Macro F1: 0.8982 | Weighted F1: 0.8982</text>
+
+  <rect x="520" y="900" width="365" height="138" class="box" fill="#f7fff7"/>
+  <text x="558" y="940" class="label">Latent visualization</text>
+  <text x="558" y="976" class="small">32-D latent features</text>
+  <text x="558" y="1006" class="small">PCA plot checks class separation</text>
+
+  <rect x="960" y="900" width="365" height="138" class="box" fill="#fff8f0"/>
+  <text x="998" y="940" class="label">Gene attribution</text>
+  <text x="998" y="976" class="small">Gradient x Input importance</text>
+  <text x="998" y="1006" class="small">Top candidate biomarkers per class</text>
+
+  <rect x="1400" y="900" width="345" height="138" class="box" fill="#fff5fa"/>
+  <text x="1438" y="940" class="label">Example top genes</text>
+  <text x="1438" y="976" class="small">AKI: MT-ND4, MT-ND3, SPP1</text>
+  <text x="1438" y="1006" class="small">Saved as CSV, Excel, figures</text>
+
+  <path d="M1512 620 C1512 852 263 830 263 887" class="softline"/>
+  <path d="M807 698 C807 836 703 839 703 887" class="softline"/>
+  <path d="M1132 802 C1132 855 1142 858 1142 887" class="softline"/>
+  <path d="M1142 1038 H1392" class="softline"/>
+
+  <!-- Small chips -->
+  <rect x="92" y="1048" width="250" height="40" class="chip"/>
+  <text x="116" y="1074" class="tiny">Batch size 128</text>
+  <rect x="360" y="1048" width="250" height="40" class="chip"/>
+  <text x="384" y="1074" class="tiny">AdamW, lr 1e-3</text>
+  <rect x="628" y="1048" width="250" height="40" class="chip"/>
+  <text x="652" y="1074" class="tiny">Early stopping patience 6</text>
+  <rect x="896" y="1048" width="250" height="40" class="chip"/>
+  <text x="920" y="1074" class="tiny">Hidden dims: 512, 128</text>
+  <rect x="1164" y="1048" width="250" height="40" class="chip"/>
+  <text x="1188" y="1074" class="tiny">Latent dim 32</text>
+  <rect x="1432" y="1048" width="250" height="40" class="chip"/>
+  <text x="1456" y="1074" class="tiny">Candidate biomarkers only</text>
+</svg>

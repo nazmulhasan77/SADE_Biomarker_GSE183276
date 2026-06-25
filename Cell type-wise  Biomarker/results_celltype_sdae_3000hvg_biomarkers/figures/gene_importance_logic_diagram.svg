@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1700" height="1050" viewBox="0 0 1700 1050">
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#1f2937"/>
+    </marker>
+    <style>
+      .bg { fill: #f8fafc; }
+      .title { font: 700 38px Arial, sans-serif; fill: #0f172a; }
+      .subtitle { font: 400 18px Arial, sans-serif; fill: #475569; }
+      .box { stroke-width: 2.2; rx: 16; }
+      .data { fill: #e0f2fe; stroke: #0369a1; }
+      .model { fill: #ede9fe; stroke: #6d28d9; }
+      .calc { fill: #dcfce7; stroke: #15803d; }
+      .expr { fill: #ffedd5; stroke: #c2410c; }
+      .rank { fill: #fee2e2; stroke: #b91c1c; }
+      .out { fill: #f1f5f9; stroke: #475569; }
+      .label { font: 700 22px Arial, sans-serif; fill: #111827; }
+      .text { font: 400 17px Arial, sans-serif; fill: #334155; }
+      .small { font: 400 15px Arial, sans-serif; fill: #475569; }
+      .mono { font: 600 16px Consolas, monospace; fill: #0f172a; }
+      .arrow { stroke: #1f2937; stroke-width: 2.8; fill: none; marker-end: url(#arrow); }
+      .dash { stroke: #64748b; stroke-width: 2.2; fill: none; stroke-dasharray: 8 7; marker-end: url(#arrow); }
+      .pill { fill: #ffffff; stroke: #94a3b8; stroke-width: 1.5; rx: 18; }
+      .pillText { font: 700 15px Arial, sans-serif; fill: #334155; }
+    </style>
+  </defs>
+
+  <rect class="bg" width="1700" height="1050"/>
+  <text class="title" x="850" y="58" text-anchor="middle">Gene Importance Logic for Biomarker Identification</text>
+  <text class="subtitle" x="850" y="90" text-anchor="middle">How the notebook ranks genes for each cell type and condition using the trained SDAE classifier</text>
+
+  <rect class="box data" x="75" y="150" width="320" height="135"/>
+  <text class="label" x="235" y="188" text-anchor="middle">Cell Type Data</text>
+  <text class="text" x="110" y="222">One cell type at a time</text>
+  <text class="mono" x="110" y="250">3000 HVG expression matrix</text>
+  <text class="small" x="110" y="274">labels: AKI, CKD, Ref</text>
+
+  <rect class="box model" x="495" y="150" width="320" height="135"/>
+  <text class="label" x="655" y="188" text-anchor="middle">Trained SDAE</text>
+  <text class="text" x="530" y="222">Encoder learns latent features</text>
+  <text class="text" x="530" y="250">Classifier predicts condition</text>
+  <text class="small" x="530" y="274">same architecture, separate model per cell type</text>
+
+  <rect class="box calc" x="915" y="150" width="320" height="135"/>
+  <text class="label" x="1075" y="188" text-anchor="middle">Choose Target Class</text>
+  <text class="text" x="950" y="222">Repeat separately for:</text>
+  <text class="mono" x="950" y="250">AKI, CKD, Ref</text>
+  <text class="small" x="950" y="274">target-class cells are used</text>
+
+  <rect class="box calc" x="1335" y="150" width="290" height="135"/>
+  <text class="label" x="1480" y="188" text-anchor="middle">Class Logit</text>
+  <text class="text" x="1370" y="222">Use model score for</text>
+  <text class="text" x="1370" y="250">the selected condition</text>
+  <text class="small" x="1370" y="274">before softmax probability</text>
+
+  <path class="arrow" d="M395 218 H495"/>
+  <path class="arrow" d="M815 218 H915"/>
+  <path class="arrow" d="M1235 218 H1335"/>
+
+  <rect class="box calc" x="145" y="405" width="390" height="155"/>
+  <text class="label" x="340" y="445" text-anchor="middle">Gradient Calculation</text>
+  <text class="text" x="180" y="482">Measure how sensitive the target</text>
+  <text class="text" x="180" y="510">class logit is to each input gene</text>
+  <text class="mono" x="180" y="538">gradient = d(logit) / d(gene)</text>
+
+  <rect class="box calc" x="655" y="405" width="390" height="155"/>
+  <text class="label" x="850" y="445" text-anchor="middle">Gradient x Input</text>
+  <text class="text" x="690" y="482">Multiply sensitivity by the actual</text>
+  <text class="text" x="690" y="510">gene expression value</text>
+  <text class="mono" x="690" y="538">importance = gradient x expression</text>
+
+  <rect class="box calc" x="1165" y="405" width="390" height="155"/>
+  <text class="label" x="1360" y="445" text-anchor="middle">Average Across Cells</text>
+  <text class="text" x="1200" y="482">Gene-wise importance is averaged</text>
+  <text class="text" x="1200" y="510">over target-class cells</text>
+  <text class="small" x="1200" y="538">up to 400 cells per class in the notebook</text>
+
+  <path class="arrow" d="M1480 285 V340 H340 V405"/>
+  <path class="arrow" d="M535 482 H655"/>
+  <path class="arrow" d="M1045 482 H1165"/>
+
+  <rect class="box expr" x="150" y="675" width="390" height="155"/>
+  <text class="label" x="345" y="715" text-anchor="middle">Mean Expression</text>
+  <text class="text" x="185" y="752">For every gene, calculate mean</text>
+  <text class="text" x="185" y="780">expression in AKI, CKD, Ref</text>
+  <text class="small" x="185" y="808">calculated from raw log expression matrix</text>
+
+  <rect class="box expr" x="655" y="675" width="390" height="155"/>
+  <text class="label" x="850" y="715" text-anchor="middle">Expression Direction</text>
+  <text class="text" x="690" y="752">Compare target condition against</text>
+  <text class="text" x="690" y="780">the other two conditions</text>
+  <text class="mono" x="690" y="808">target - mean(others)</text>
+
+  <rect class="box rank" x="1165" y="675" width="390" height="155"/>
+  <text class="label" x="1360" y="715" text-anchor="middle">Combined Score</text>
+  <text class="text" x="1200" y="752">Final score rewards genes that are</text>
+  <text class="text" x="1200" y="780">model-important and condition-specific</text>
+  <text class="mono" x="1200" y="808">importance x abs(expression difference)</text>
+
+  <path class="dash" d="M345 560 V675"/>
+  <path class="arrow" d="M540 752 H655"/>
+  <path class="arrow" d="M1045 752 H1165"/>
+  <path class="dash" d="M1360 560 V675"/>
+
+  <rect class="box out" x="310" y="910" width="1080" height="82"/>
+  <text class="label" x="850" y="942" text-anchor="middle">Final Biomarker List</text>
+  <text class="text" x="850" y="970" text-anchor="middle">Genes are sorted by combined score within each cell type and class: AKI-specific, CKD-specific, and Ref-specific biomarkers</text>
+
+  <path class="arrow" d="M1360 830 V910"/>
+
+  <rect class="pill" x="170" y="330" width="250" height="38"/>
+  <text class="pillText" x="295" y="355" text-anchor="middle">Model-based importance</text>
+  <rect class="pill" x="185" y="602" width="250" height="38"/>
+  <text class="pillText" x="310" y="627" text-anchor="middle">Biological expression shift</text>
+  <rect class="pill" x="1260" y="602" width="250" height="38"/>
+  <text class="pillText" x="1385" y="627" text-anchor="middle">Final ranking score</text>
+
+  <text class="small" x="850" y="1030" text-anchor="middle">Interpretation: high-ranked genes are not only useful for SDAE prediction, they also show strong target-condition expression difference.</text>
+</svg>

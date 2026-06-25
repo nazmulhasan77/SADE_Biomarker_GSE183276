@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="980" viewBox="0 0 1600 980">
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#1f2937"/>
+    </marker>
+    <style>
+      .bg { fill: #f8fafc; }
+      .title { font: 700 34px Arial, sans-serif; fill: #111827; }
+      .subtitle { font: 400 18px Arial, sans-serif; fill: #475569; }
+      .box { fill: #ffffff; stroke: #334155; stroke-width: 2; rx: 14; }
+      .box-blue { fill: #e0f2fe; stroke: #0369a1; stroke-width: 2; rx: 14; }
+      .box-green { fill: #dcfce7; stroke: #15803d; stroke-width: 2; rx: 14; }
+      .box-orange { fill: #ffedd5; stroke: #c2410c; stroke-width: 2; rx: 14; }
+      .box-purple { fill: #ede9fe; stroke: #6d28d9; stroke-width: 2; rx: 14; }
+      .box-red { fill: #fee2e2; stroke: #b91c1c; stroke-width: 2; rx: 14; }
+      .box-gray { fill: #f1f5f9; stroke: #475569; stroke-width: 2; rx: 14; }
+      .label { font: 700 20px Arial, sans-serif; fill: #111827; }
+      .text { font: 400 16px Arial, sans-serif; fill: #334155; }
+      .small { font: 400 14px Arial, sans-serif; fill: #475569; }
+      .mono { font: 600 14px Consolas, monospace; fill: #0f172a; }
+      .arrow { stroke: #1f2937; stroke-width: 2.5; fill: none; marker-end: url(#arrow); }
+      .thin { stroke: #64748b; stroke-width: 1.5; fill: none; marker-end: url(#arrow); }
+      .section { font: 700 17px Arial, sans-serif; fill: #0f172a; }
+    </style>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1600" height="980"/>
+
+  <text class="title" x="800" y="58" text-anchor="middle">Cell Type-wise Biomarker Identification Workflow</text>
+  <text class="subtitle" x="800" y="88" text-anchor="middle">GSE183276 single-cell kidney data | Conditions: AKI, CKD, Ref | Model: Supervised Denoising Autoencoder</text>
+
+  <rect class="box-blue" x="60" y="150" width="270" height="135"/>
+  <text class="label" x="195" y="184" text-anchor="middle">Input Dataset</text>
+  <text class="text" x="88" y="218">Single-cell expression matrix</text>
+  <text class="mono" x="88" y="246">109,741 cells x 37,080 genes</text>
+  <text class="small" x="88" y="270">Metadata: condition.l1, subclass.l1</text>
+
+  <rect class="box-green" x="420" y="150" width="300" height="135"/>
+  <text class="label" x="570" y="184" text-anchor="middle">Select Valid Cell Types</text>
+  <text class="text" x="448" y="218">PT, TAL, IMM, EC, IC, PC, CNT, DCT</text>
+  <text class="small" x="448" y="246">Each cell type processed separately</text>
+  <text class="small" x="448" y="270">Only AKI, CKD, Ref cells retained</text>
+
+  <rect class="box-orange" x="810" y="150" width="310" height="135"/>
+  <text class="label" x="965" y="184" text-anchor="middle">Balance Conditions</text>
+  <text class="text" x="838" y="218">Equal AKI / CKD / Ref cells</text>
+  <text class="small" x="838" y="246">Ref count used when possible</text>
+  <text class="small" x="838" y="270">Otherwise smallest condition count</text>
+
+  <rect class="box-purple" x="1210" y="150" width="300" height="135"/>
+  <text class="label" x="1360" y="184" text-anchor="middle">Feature Selection</text>
+  <text class="text" x="1238" y="218">Top 3000 HVGs per cell type</text>
+  <text class="small" x="1238" y="246">Genes selected by variance</text>
+  <text class="small" x="1238" y="270">Separate HVG list for each cell type</text>
+
+  <path class="arrow" d="M330 218 H420"/>
+  <path class="arrow" d="M720 218 H810"/>
+  <path class="arrow" d="M1120 218 H1210"/>
+
+  <rect class="box-gray" x="70" y="365" width="305" height="165"/>
+  <text class="section" x="222" y="400" text-anchor="middle">Per Cell Type Balanced Data</text>
+  <text class="mono" x="102" y="432">PT: 15,549 cells</text>
+  <text class="mono" x="102" y="457">TAL: 10,935 cells</text>
+  <text class="mono" x="102" y="482">EC: 5,745 cells</text>
+  <text class="mono" x="102" y="507">CNT: 4,749 cells</text>
+
+  <rect class="box-gray" x="405" y="365" width="305" height="165"/>
+  <text class="section" x="557" y="400" text-anchor="middle">More Cell Types</text>
+  <text class="mono" x="437" y="432">IMM: 4,419 cells</text>
+  <text class="mono" x="437" y="457">IC: 3,330 cells</text>
+  <text class="mono" x="437" y="482">PC: 2,478 cells</text>
+  <text class="mono" x="437" y="507">DCT: 2,472 cells</text>
+
+  <rect class="box-blue" x="810" y="365" width="300" height="165"/>
+  <text class="label" x="960" y="400" text-anchor="middle">Train / Val / Test Split</text>
+  <text class="text" x="842" y="435">Stratified split within cell type</text>
+  <text class="small" x="842" y="465">Labels: AKI, CKD, Ref</text>
+  <text class="small" x="842" y="493">Training history saved per cell type</text>
+
+  <rect class="box-red" x="1210" y="365" width="300" height="165"/>
+  <text class="label" x="1360" y="400" text-anchor="middle">SDAE Classifier</text>
+  <text class="text" x="1238" y="435">Noise probability: 0.2</text>
+  <text class="text" x="1238" y="463">Encoder: 3000 -> 512 -> 128</text>
+  <text class="text" x="1238" y="491">Latent: 32 -> AKI/CKD/Ref</text>
+
+  <path class="arrow" d="M1360 285 V325 H222 V365"/>
+  <path class="thin" d="M375 448 H405"/>
+  <path class="arrow" d="M710 448 H810"/>
+  <path class="arrow" d="M1110 448 H1210"/>
+
+  <rect class="box-green" x="140" y="620" width="310" height="165"/>
+  <text class="label" x="295" y="655" text-anchor="middle">Model Evaluation</text>
+  <text class="text" x="168" y="690">Confusion matrix</text>
+  <text class="text" x="168" y="718">Accuracy, macro F1, weighted F1</text>
+  <text class="small" x="168" y="748">Latent PCA used to inspect separation</text>
+
+  <rect class="box-purple" x="555" y="620" width="390" height="165"/>
+  <text class="label" x="750" y="655" text-anchor="middle">Gene Importance</text>
+  <text class="text" x="585" y="690">For each class logit, compute Gradient x Input</text>
+  <text class="text" x="585" y="718">Importance averaged over target-class cells</text>
+  <text class="small" x="585" y="748">Up to 400 cells used per class for importance</text>
+
+  <rect class="box-orange" x="1050" y="620" width="390" height="165"/>
+  <text class="label" x="1245" y="655" text-anchor="middle">Final Biomarker Ranking</text>
+  <text class="text" x="1080" y="690">Mean expression calculated in AKI, CKD, Ref</text>
+  <text class="text" x="1080" y="718">target_minus_others_mean added</text>
+  <text class="mono" x="1080" y="748">combined_score = importance x abs(diff)</text>
+
+  <path class="arrow" d="M1360 530 V575 H295 V620"/>
+  <path class="arrow" d="M450 702 H555"/>
+  <path class="arrow" d="M945 702 H1050"/>
+
+  <rect class="box-blue" x="290" y="865" width="1020" height="72"/>
+  <text class="label" x="800" y="895" text-anchor="middle">Outputs</text>
+  <text class="text" x="800" y="923" text-anchor="middle">Per-cell-type top biomarkers for AKI, CKD, and Ref + combined compact tables, plots, trained models, and performance metrics</text>
+
+  <path class="arrow" d="M1245 785 V865"/>
+
+  <text class="small" x="800" y="962" text-anchor="middle">Interpretation: a gene is prioritized when it is important for SDAE class prediction and shows strong target-condition expression difference.</text>
+</svg>

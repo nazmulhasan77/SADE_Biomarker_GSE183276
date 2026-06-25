@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1700" height="1050" viewBox="0 0 1700 1050">
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#1f2937"/>
+    </marker>
+    <marker id="arrowBlue" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#0369a1"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#15803d"/>
+    </marker>
+    <style>
+      .bg { fill: #f8fafc; }
+      .title { font: 700 36px Arial, sans-serif; fill: #0f172a; }
+      .subtitle { font: 400 18px Arial, sans-serif; fill: #475569; }
+      .stage { fill: #ffffff; stroke: #334155; stroke-width: 2; rx: 16; }
+      .input { fill: #e0f2fe; stroke: #0369a1; stroke-width: 2; rx: 16; }
+      .noise { fill: #fee2e2; stroke: #b91c1c; stroke-width: 2; rx: 16; }
+      .encoder { fill: #dcfce7; stroke: #15803d; stroke-width: 2; rx: 16; }
+      .latent { fill: #ede9fe; stroke: #6d28d9; stroke-width: 2.5; rx: 18; }
+      .decoder { fill: #ffedd5; stroke: #c2410c; stroke-width: 2; rx: 16; }
+      .classifier { fill: #fef3c7; stroke: #b45309; stroke-width: 2; rx: 16; }
+      .loss { fill: #f1f5f9; stroke: #475569; stroke-width: 2; rx: 16; }
+      .label { font: 700 21px Arial, sans-serif; fill: #111827; }
+      .text { font: 400 16px Arial, sans-serif; fill: #334155; }
+      .small { font: 400 14px Arial, sans-serif; fill: #475569; }
+      .mono { font: 600 15px Consolas, monospace; fill: #0f172a; }
+      .layerText { font: 700 18px Arial, sans-serif; fill: #0f172a; }
+      .arrow { stroke: #1f2937; stroke-width: 2.8; fill: none; marker-end: url(#arrow); }
+      .arrowBlue { stroke: #0369a1; stroke-width: 2.8; fill: none; marker-end: url(#arrowBlue); }
+      .arrowGreen { stroke: #15803d; stroke-width: 2.8; fill: none; marker-end: url(#arrowGreen); }
+      .dash { stroke: #64748b; stroke-width: 2; fill: none; stroke-dasharray: 7 7; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <rect class="bg" width="1700" height="1050"/>
+  <text class="title" x="850" y="58" text-anchor="middle">Supervised Denoising Autoencoder Architecture</text>
+  <text class="subtitle" x="850" y="88" text-anchor="middle">Used for cell type-wise biomarker discovery in SDAE_GSE183276_celltype_balanced_3000HVG_biomarker.ipynb</text>
+
+  <rect class="input" x="65" y="175" width="245" height="130"/>
+  <text class="label" x="188" y="210" text-anchor="middle">Input</text>
+  <text class="mono" x="188" y="242" text-anchor="middle">X: 3000 HVG genes</text>
+  <text class="small" x="188" y="270" text-anchor="middle">per selected cell type</text>
+
+  <rect class="noise" x="390" y="175" width="270" height="130"/>
+  <text class="label" x="525" y="210" text-anchor="middle">Denoising Noise</text>
+  <text class="mono" x="525" y="242" text-anchor="middle">random gene masking</text>
+  <text class="small" x="525" y="270" text-anchor="middle">training only, noise_prob = 0.2</text>
+
+  <path class="arrow" d="M310 240 H390"/>
+
+  <rect class="encoder" x="755" y="145" width="560" height="190"/>
+  <text class="label" x="1035" y="180" text-anchor="middle">Encoder</text>
+  <rect class="stage" x="790" y="210" width="145" height="82"/>
+  <text class="layerText" x="862" y="242" text-anchor="middle">Linear</text>
+  <text class="mono" x="862" y="268" text-anchor="middle">3000 -> 512</text>
+  <rect class="stage" x="970" y="210" width="145" height="82"/>
+  <text class="layerText" x="1042" y="242" text-anchor="middle">Linear</text>
+  <text class="mono" x="1042" y="268" text-anchor="middle">512 -> 128</text>
+  <rect class="stage" x="1150" y="210" width="130" height="82"/>
+  <text class="layerText" x="1215" y="242" text-anchor="middle">Linear</text>
+  <text class="mono" x="1215" y="268" text-anchor="middle">128 -> 32</text>
+  <text class="small" x="1035" y="319" text-anchor="middle">Each hidden layer: Linear + BatchNorm1d + ReLU + Dropout(0.15)</text>
+
+  <path class="arrowGreen" d="M660 240 H755"/>
+  <path class="arrowGreen" d="M935 251 H970"/>
+  <path class="arrowGreen" d="M1115 251 H1150"/>
+
+  <rect class="latent" x="695" y="430" width="310" height="150"/>
+  <text class="label" x="850" y="468" text-anchor="middle">Latent Representation</text>
+  <text class="mono" x="850" y="505" text-anchor="middle">z: 32 dimensions</text>
+  <text class="small" x="850" y="536" text-anchor="middle">shared by reconstruction and classification</text>
+
+  <path class="arrowGreen" d="M1215 292 V377 H850 V430"/>
+
+  <rect class="decoder" x="170" y="695" width="500" height="190"/>
+  <text class="label" x="420" y="730" text-anchor="middle">Decoder Branch</text>
+  <rect class="stage" x="205" y="760" width="130" height="82"/>
+  <text class="layerText" x="270" y="792" text-anchor="middle">Linear</text>
+  <text class="mono" x="270" y="818" text-anchor="middle">32 -> 128</text>
+  <rect class="stage" x="370" y="760" width="130" height="82"/>
+  <text class="layerText" x="435" y="792" text-anchor="middle">Linear</text>
+  <text class="mono" x="435" y="818" text-anchor="middle">128 -> 512</text>
+  <rect class="stage" x="535" y="760" width="105" height="82"/>
+  <text class="layerText" x="588" y="792" text-anchor="middle">Linear</text>
+  <text class="mono" x="588" y="818" text-anchor="middle">512 -> 3000</text>
+  <text class="small" x="420" y="868" text-anchor="middle">Hidden decoder layers: Linear + BatchNorm1d + ReLU</text>
+
+  <rect class="classifier" x="1030" y="695" width="500" height="190"/>
+  <text class="label" x="1280" y="730" text-anchor="middle">Classifier Branch</text>
+  <rect class="stage" x="1075" y="760" width="150" height="82"/>
+  <text class="layerText" x="1150" y="792" text-anchor="middle">Linear + ReLU</text>
+  <text class="mono" x="1150" y="818" text-anchor="middle">32 -> 64</text>
+  <rect class="stage" x="1270" y="760" width="215" height="82"/>
+  <text class="layerText" x="1378" y="792" text-anchor="middle">Dropout + Linear</text>
+  <text class="mono" x="1378" y="818" text-anchor="middle">64 -> 3 classes</text>
+  <text class="small" x="1280" y="868" text-anchor="middle">Outputs logits for AKI, CKD, Ref</text>
+
+  <path class="arrowBlue" d="M790 580 V645 H420 V695"/>
+  <path class="arrowBlue" d="M910 580 V645 H1280 V695"/>
+  <path class="arrowBlue" d="M335 801 H370"/>
+  <path class="arrowBlue" d="M500 801 H535"/>
+  <path class="arrowBlue" d="M1225 801 H1270"/>
+
+  <rect class="loss" x="610" y="925" width="480" height="82"/>
+  <text class="label" x="850" y="955" text-anchor="middle">Joint Training Objective</text>
+  <text class="mono" x="850" y="984" text-anchor="middle">Loss = lambda_recon x MSE(X, Xhat) + lambda_cls x CE(y, yhat)</text>
+
+  <path class="dash" d="M588 842 V930 H610"/>
+  <path class="dash" d="M1378 842 V930 H1090"/>
+
+  <text class="small" x="850" y="1030" text-anchor="middle">Biomarker step uses the trained classifier branch: class logit gradients are combined with input expression using Gradient x Input.</text>
+</svg>

@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1750" height="1150" viewBox="0 0 1750 1150">
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#1f2937"/>
+    </marker>
+    <style>
+      .bg { fill: #f8fafc; }
+      .title { font: 700 38px Arial, sans-serif; fill: #0f172a; }
+      .subtitle { font: 400 18px Arial, sans-serif; fill: #475569; }
+      .box { stroke-width: 2.2; rx: 16; }
+      .meta { fill: #e0f2fe; stroke: #0369a1; }
+      .target { fill: #dcfce7; stroke: #15803d; }
+      .prep { fill: #ffedd5; stroke: #c2410c; }
+      .train { fill: #fef3c7; stroke: #b45309; }
+      .model { fill: #ede9fe; stroke: #6d28d9; }
+      .balance { fill: #fee2e2; stroke: #b91c1c; }
+      .bio { fill: #f1f5f9; stroke: #475569; }
+      .label { font: 700 22px Arial, sans-serif; fill: #111827; }
+      .text { font: 400 16px Arial, sans-serif; fill: #334155; }
+      .small { font: 400 14px Arial, sans-serif; fill: #475569; }
+      .mono { font: 600 15px Consolas, monospace; fill: #0f172a; }
+      .arrow { stroke: #1f2937; stroke-width: 2.5; fill: none; marker-end: url(#arrow); }
+      .caption { font: 700 16px Arial, sans-serif; fill: #0f172a; }
+    </style>
+  </defs>
+
+  <rect class="bg" width="1750" height="1150"/>
+  <text class="title" x="875" y="58" text-anchor="middle">Meaning of Notebook Parameter Block</text>
+  <text class="subtitle" x="875" y="90" text-anchor="middle">These settings control cell selection, feature selection, SDAE training, balancing, and biomarker extraction</text>
+
+  <rect class="box meta" x="80" y="150" width="380" height="155"/>
+  <text class="label" x="270" y="187" text-anchor="middle">Metadata Columns</text>
+  <text class="mono" x="110" y="222">CONDITION_COL = condition.l1</text>
+  <text class="text" x="110" y="250">Which metadata column gives disease group</text>
+  <text class="mono" x="110" y="278">CELLTYPE_COL = subclass.l1</text>
+  <text class="text" x="110" y="302">Which metadata column gives cell type</text>
+
+  <rect class="box target" x="520" y="150" width="360" height="155"/>
+  <text class="label" x="700" y="187" text-anchor="middle">Target Groups</text>
+  <text class="mono" x="550" y="222">TARGET_CLASSES</text>
+  <text class="text" x="550" y="250">AKI, CKD, Ref are predicted classes</text>
+  <text class="mono" x="550" y="278">TARGET_CELL_TYPES</text>
+  <text class="text" x="550" y="302">PT, TAL, IMM, EC, IC, PC, CNT, DCT</text>
+
+  <rect class="box prep" x="940" y="150" width="320" height="155"/>
+  <text class="label" x="1100" y="187" text-anchor="middle">Feature Selection</text>
+  <text class="mono" x="970" y="222">N_TOP_HVG = 3000</text>
+  <text class="text" x="970" y="250">For each cell type, choose top</text>
+  <text class="text" x="970" y="278">3000 highly variable genes</text>
+
+  <rect class="box prep" x="1320" y="150" width="350" height="155"/>
+  <text class="label" x="1495" y="187" text-anchor="middle">Data Split</text>
+  <text class="mono" x="1350" y="222">TEST_SIZE = 0.20</text>
+  <text class="text" x="1350" y="250">20% held out for final testing</text>
+  <text class="mono" x="1350" y="278">VAL_SIZE_FROM_TRAIN = 0.15</text>
+  <text class="text" x="1350" y="302">15% of remaining train used for validation</text>
+
+  <rect class="box train" x="80" y="390" width="380" height="205"/>
+  <text class="label" x="270" y="428" text-anchor="middle">Training Settings</text>
+  <text class="mono" x="110" y="462">BATCH_SIZE = 128</text>
+  <text class="text" x="110" y="488">Number of cells processed per update</text>
+  <text class="mono" x="110" y="518">EPOCHS = 30</text>
+  <text class="text" x="110" y="544">Maximum training passes</text>
+  <text class="mono" x="110" y="574">PATIENCE = 7</text>
+  <text class="text" x="110" y="598">Early stop if validation F1 stops improving</text>
+
+  <rect class="box train" x="520" y="390" width="360" height="205"/>
+  <text class="label" x="700" y="428" text-anchor="middle">Optimizer Settings</text>
+  <text class="mono" x="550" y="462">LEARNING_RATE = 1e-3</text>
+  <text class="text" x="550" y="488">How fast model weights update</text>
+  <text class="mono" x="550" y="518">WEIGHT_DECAY = 1e-4</text>
+  <text class="text" x="550" y="544">Regularization to reduce overfitting</text>
+
+  <rect class="box model" x="940" y="390" width="320" height="205"/>
+  <text class="label" x="1100" y="428" text-anchor="middle">SDAE Architecture</text>
+  <text class="mono" x="970" y="462">NOISE_PROB = 0.20</text>
+  <text class="text" x="970" y="488">Randomly masks 20% gene values during training</text>
+  <text class="mono" x="970" y="518">HIDDEN_DIMS = (512, 128)</text>
+  <text class="text" x="970" y="544">Encoder hidden layer sizes</text>
+  <text class="mono" x="970" y="574">LATENT_DIM = 32</text>
+  <text class="text" x="970" y="598">Compressed representation size</text>
+
+  <rect class="box model" x="1320" y="390" width="350" height="205"/>
+  <text class="label" x="1495" y="428" text-anchor="middle">Loss Weights</text>
+  <text class="mono" x="1350" y="462">RECON_LOSS_WEIGHT = 1.0</text>
+  <text class="text" x="1350" y="488">Weight of reconstruction task</text>
+  <text class="mono" x="1350" y="518">CLASS_LOSS_WEIGHT = 1.5</text>
+  <text class="text" x="1350" y="544">Weight of AKI/CKD/Ref classification task</text>
+  <text class="small" x="1350" y="574">Higher value emphasizes condition prediction</text>
+
+  <rect class="box balance" x="240" y="700" width="530" height="190"/>
+  <text class="label" x="505" y="738" text-anchor="middle">Class Balancing Rule</text>
+  <text class="mono" x="275" y="774">BALANCE_BY_REF_WHEN_POSSIBLE = True</text>
+  <text class="text" x="275" y="802">Use Ref count as target sample count if AKI and CKD have enough cells</text>
+  <text class="mono" x="275" y="832">ALLOW_REPLACEMENT_IF_REF_LARGER = False</text>
+  <text class="text" x="275" y="860">Do not oversample with replacement; use smallest condition count if needed</text>
+
+  <rect class="box bio" x="980" y="700" width="530" height="190"/>
+  <text class="label" x="1245" y="738" text-anchor="middle">Biomarker Extraction</text>
+  <text class="mono" x="1015" y="774">TOP_N_GENES_PER_CLASS = 200</text>
+  <text class="text" x="1015" y="802">Keep top 200 ranked genes for each class and cell type</text>
+  <text class="mono" x="1015" y="832">IMPORTANCE_MAX_CELLS_PER_CLASS = 400</text>
+  <text class="text" x="1015" y="860">Use up to 400 cells per class to compute Gradient x Input importance</text>
+
+  <rect class="box bio" x="385" y="980" width="980" height="90"/>
+  <text class="label" x="875" y="1015" text-anchor="middle">Overall Effect</text>
+  <text class="text" x="875" y="1045" text-anchor="middle">These parameters define what data enters the pipeline, how the SDAE learns, how fair class comparison is maintained, and how many biomarkers are reported.</text>
+
+  <path class="arrow" d="M460 228 H520"/>
+  <path class="arrow" d="M880 228 H940"/>
+  <path class="arrow" d="M1260 228 H1320"/>
+  <path class="arrow" d="M270 305 V390"/>
+  <path class="arrow" d="M700 305 V390"/>
+  <path class="arrow" d="M1100 305 V390"/>
+  <path class="arrow" d="M1495 305 V390"/>
+  <path class="arrow" d="M505 595 V700"/>
+  <path class="arrow" d="M1245 595 V700"/>
+  <path class="arrow" d="M505 890 V980"/>
+  <path class="arrow" d="M1245 890 V980"/>
+
+  <text class="caption" x="875" y="1120" text-anchor="middle">Simple reading: columns select labels, target lists select groups, HVG/split prepare data, training/model/loss settings train SDAE, balancing ensures fairness, biomarker settings control final gene ranking output.</text>
+</svg>
